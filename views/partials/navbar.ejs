@@ -1,0 +1,36 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Resume Screening System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Home</a>
+                <% if(!currentUser) {%>
+                    <% } else if(!currentUser.isAdmin){%>
+                        <a class="nav-link" href="/user">Dashboard</a>
+                        <a class="nav-link" href="/fill-resume">Fill Resume</a>
+                        <a class="nav-link" href="/user/view-resume">View Resume</a>
+                        <a class="nav-link" href="/all-companies">Companies</a>
+                        <a class="nav-link" href="/feedback">Feedback</a>
+                        <% } else { %>
+                            <a class="nav-link" href="/admin">Dashboard</a>
+                            <a class="nav-link" href="/addcomp">Add Compnay</a>
+                            <a class="nav-link" href="/all-companies">Companies</a>
+                            <a class="nav-link" href="/admin/view-resumes">Resumes</a>
+                            <% }%>
+            </div>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <% if(!currentUser) {%>
+                <a class="nav-link" href="/login">Login</a>
+                <a class="nav-link" href="/register">Register</a>
+                <% } else {%>
+                    <a class="nav-link" href="/logout">Logout</a>
+                    <% } %>
+        </div>
+    </div>
+    </div>
+</nav>

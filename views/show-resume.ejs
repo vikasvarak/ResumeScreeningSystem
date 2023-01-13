@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate')%>
+    <h1 class="text-center">Resumes</h1>
+    <% if(resumeData) {%>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Name -
+                            <%= resumeData.name %>
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>Career Objective -</b><br>
+                            <%= resumeData.careerObjective %>
+                        </li>
+                        <li class="list-group-item"><b>Qualification - </b><br> SSC Percentage -
+                            <%= resumeData.ssc%>% <br> HSC Percentage -
+                                <%= resumeData.hsc%>% <br> Graduation CGPA -
+                                    <%= resumeData.graduation%>/10
+                        </li>
+                        <li class="list-group-item"><b>Skills -</b>
+                            <%= resumeData.skill%>
+                        </li>
+                        <li class="list-group-item"> <b>Projects -</b><br>
+                            <%= resumeData.project%>
+                        </li>
+                        <li class="list-group-item"> <b>Internship -</b><br>
+                            <%= resumeData.internship%>
+                        </li>
+                        <li class="list-group-item"> <b>Achievements -</b><br>
+                            <%= resumeData.achievement%>
+                        </li>
+                        <% if(!currentUser.isAdmin){%>
+                            <li class="list-group-item"> <a class="btn btn-primary" href="/edit">Edit Resume</a>
+                            </li>
+                            <% } else { %>
+
+                                <% }%>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <% } else { %>
+            <a href="/fiillresume" class='text-center'>Add Company</a>
+            <% } %>

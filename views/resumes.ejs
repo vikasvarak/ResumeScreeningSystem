@@ -1,0 +1,20 @@
+<% layout('layouts/boilerplate')%>
+    <h1 class="text-center">Resumes</h1>
+    <% if(resumeData) {%>
+        <% for (var resume in resumeData) { %>
+            <div class="container p-2 my-5 bg-info text-black" style="width: 50%;">
+                <h5 class="">Candidate Name -
+                    <%= resumeData[resume].name %>
+                </h5>
+                <li class="list-group-item"> <a class="btn btn-success"
+                        href="/resume/<%=resumeData[resume].resumeId%>">View Resume</a>
+                </li>
+            </div>
+            <% } %>
+                <div class="container my-5 text-black" style="width: 50%;">
+                    <a class="btn btn-dark" href="/admin/generate-static-rank%>">Generate Rank</a>
+                </div>
+
+                <% } else { %>
+                    <a href="/fiillresume" class='text-center'>Add Company</a>
+                    <% } %>

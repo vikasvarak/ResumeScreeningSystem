@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate')%>
+    <h1 class="text-center">Companies</h1>
+    <% if(companyData) {%>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Company Name -
+                            <%= companyData.name %>
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><b>About Company -</b><br>
+                            <%= companyData.about %>
+                        </li>
+                        <li class="list-group-item"> <b>Job Description -</b><br>
+                            <%= companyData.description%>
+                        </li>
+                        <li class="list-group-item"><b>Required Qualification - </b><br> SSC Percentage -
+                            <%= companyData.ssc%>% <br> HSC Percentage -
+                                <%= companyData.hsc%>% <br> Graduation CGPA -
+                                    <%= companyData.graduation%>/10
+                        </li>
+                        <li class="list-group-item"><b> Requored Skills -</b>
+                            <%= companyData.skills%>
+                        </li>
+
+                        <% if(!currentUser.isAdmin){%>
+                            <!-- <li class="list-group-item"> <a class="btn btn-primary" href="/success-message">Apply</a>
+                            </li> -->
+                            <form class="p-2" action="/applied-candidates/" method="POST">
+                                <button class="btn btn-primary">Apply</button>
+                            </form>
+                            <% } else { %>
+                                <div class="card-body">
+                                    <a class="card-link btn btn-info" href="/editcomp">Edit</a>
+                                    <form class="d-inline" action="" method="POST">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                                <% }%>
+
+                                    <!-- <li class="list-group-item"> <a class="btn btn-primary" href="/editcomp">View
+                                Applications</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <% } else { %>
+            <a href="/fiillresume" class='text-center'>Add Company</a>
+            <% } %>

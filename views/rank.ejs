@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate')%>
+    <h1 class="text-center">Ranked Candidates</h1>
+    <% for (var resume in resumes) { %>
+        <div class="container p-2 my-5 bg-info text-black" style="width: 50%;">
+            <h5 class="">Candidate Name -
+                <%= resumes[resume].name %>
+            </h5>
+            <li class="list-group-item"> <a class="btn btn-success" href="/resume/<%=resumes[resume].resumeId%>">View
+                    Resume</a>
+            </li>
+        </div>
+        <% } %>

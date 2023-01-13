@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Edit Resume</h1>
+        <div class="col-6 offset-3">
+            <form action="/edit?_method=PUT" method="POST" novalidate class="validated-form">
+                <div class="mb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Enter your Name</label>
+                        <input class="form-control" type="text" id="name" name="name" value="<%=resume.name%>" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3 form-group row">
+                        <div class="col-4">
+                            <label class="form-label" for="ssc">SSC Percentage</label>
+                            <input class="form-control" id="ssc" name="ssc" type="text" value="<%=resume.ssc%>"
+                                required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" for="hsc">HSC Percentage</label>
+                            <input class="form-control" id="hsc" name="hsc" type="text" value="<%=resume.hsc%>"
+                                required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" for="graduation">Graduation CGPA</label>
+                            <input class="form-control" id="graduation" name="graduation" type="text"
+                                value="<%=resume.graduation%>" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="skill">Skills</label>
+                        <input class="form-control" type="text" id="skill" name="skill" value="<%=resume.skill%>"
+                            required></input>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="project">Projects</label>
+                        <textarea class="form-control" type="text" id="project" name="project"
+                            value="<%=resume.project%>" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="internship">Internships</label>
+                        <textarea class="form-control" type="text" id="internship" name="internship"
+                            value="<%=resume.internship%>" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="achievement">Achievements</label>
+                        <textarea class="form-control" type="text" id="achievement" name="achievement"
+                            value="<%=resume.achievement%>" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-info">Update Resume</button>
+                    </div>
+            </form>
+            </form>
+            <a href="/user">Back To Resume</a>
+
+        </div>
+    </div>

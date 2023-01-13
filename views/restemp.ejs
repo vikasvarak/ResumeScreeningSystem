@@ -1,0 +1,114 @@
+<% layout('layouts/boilerplate')%>
+    <div class="row">
+        <h1 class="text-center">Fill Resume Details</h1>
+        <div class="col-6 offset-3">
+            <form action="/fill-Resume/" method="POST" novalidate class="validated-form">
+                <div class="mb-3">
+                    <label class="form-label" for="name">Enter your Name</label>
+                    <input class="form-control" type="text" id="name" name="name" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="careerObjective">Career Objective</label>
+                    <textarea class="form-control" type="text" id="careerObjective" name="careerObjective"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="mb-3 form-group row">
+                    <div class="col-4">
+                        <label class="form-label" for="ssc">SSC Percentage</label>
+                        <input class="form-control" id="ssc" name="ssc" type="text" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="hsc">HSC Percentage</label>
+                        <input class="form-control" id="hsc" name="hsc" type="text" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label" for="graduation">Graduation CGPA</label>
+                        <input class="form-control" id="graduation" name="graduation" type="text" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="skill">Skills</label>
+                    <input class="form-control" type="text" id="skill" name="skill" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="project">Projects</label>
+                    <textarea class="form-control" type="text" id="project" name="project" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div> -->
+                <div class="mb-3">
+                    <label class="form-label" for="project">Projects</label>
+                    <textarea class="form-control" type="text" id="project" name="project" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Project</button>
+
+                <script>
+                    document.getElementById('add-project-btn').addEventListener('click', function () {
+                        // create a new textarea element
+                        var textarea = document.createElement('textarea');
+                        textarea.className = 'form-control';
+                        textarea.type = 'text';
+                        textarea.name = 'project';
+                        textarea.required = true;
+
+                        // add the textarea to the DOM
+                        var mb3 = document.getElementsByClassName('mb-3')[4];
+                        mb3.parentNode.insertBefore(textarea, mb3.nextSibling);
+                    });
+                </script>
+
+                <div class="mb-3 mt-2">
+                    <label class="form-label" for="internship">Internships</label>
+                    <textarea class="form-control" type="text" id="internship" name="internship" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Internship</button>
+                <div class="mb-3 mt-2">
+                    <label class="form-label" for="certification">Certifications</label>
+                    <textarea class="form-control" type="text" id="certification" name="certification"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Certification</button>
+                <!-- <div class="mb-3">
+                    <label class="form-label" for="achievement">Achievements</label>
+                    <textarea class="form-control" type="text" id="achievement" name="achievement" required></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div> -->
+                <div class="mb-3 mt-2">
+                    <button class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
