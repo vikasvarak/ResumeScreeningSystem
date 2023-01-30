@@ -1,8 +1,9 @@
 <% layout('layouts/boilerplate')%>
-    <div class="row">
+    <div class="row ">
         <h1 class="text-center">Fill Resume Details</h1>
-        <div class="col-6 offset-3">
+        <div class="col-6 offset-3 border border-warning rounded bg-light px-4 py-3 mb-3">
             <form action="/fill-Resume/" method="POST" novalidate class="validated-form">
+                <!-- name -->
                 <div class="mb-3">
                     <label class="form-label" for="name">Enter your Name</label>
                     <input class="form-control" type="text" id="name" name="name" required>
@@ -10,6 +11,7 @@
                         Looks good!
                     </div>
                 </div>
+                <!-- career objective -->
                 <div class="mb-3">
                     <label class="form-label" for="careerObjective">Career Objective</label>
                     <textarea class="form-control" type="text" id="careerObjective" name="careerObjective"
@@ -18,7 +20,9 @@
                         Looks good!
                     </div>
                 </div>
+                <!-- education details -->
                 <div class="mb-3 form-group row">
+                    <label class="form-label" for="careerObjective">Qualification</label>
                     <div class="col-4">
                         <label class="form-label" for="ssc">SSC Percentage</label>
                         <input class="form-control" id="ssc" name="ssc" type="text" required>
@@ -40,8 +44,8 @@
                             Looks good!
                         </div>
                     </div>
-
                 </div>
+                <!-- skills -->
                 <div class="mb-3">
                     <label class="form-label" for="skill">Skills</label>
                     <input class="form-control" type="text" id="skill" name="skill" required></textarea>
@@ -49,65 +53,138 @@
                         Looks good!
                     </div>
                 </div>
-
-                <!-- <div class="mb-3">
-                    <label class="form-label" for="project">Projects</label>
-                    <textarea class="form-control" type="text" id="project" name="project" required></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div> -->
-                <div class="mb-3">
-                    <label class="form-label" for="project">Projects</label>
-                    <textarea class="form-control" type="text" id="project" name="project" required></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-
-                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Project</button>
-
+                <!-- projects -->
                 <script>
-                    document.getElementById('add-project-btn').addEventListener('click', function () {
-                        // create a new textarea element
-                        var textarea = document.createElement('textarea');
-                        textarea.className = 'form-control';
-                        textarea.type = 'text';
-                        textarea.name = 'project';
-                        textarea.required = true;
-
-                        // add the textarea to the DOM
-                        var mb3 = document.getElementsByClassName('mb-3')[4];
-                        mb3.parentNode.insertBefore(textarea, mb3.nextSibling);
-                    });
+                    var count = 1;
+                    function addProject() {
+                        count++;
+                        var div = document.createElement("div");
+                        div.classList.add("mb-3");
+                        div.classList.add("mb-2");
+                        div.innerHTML = `
+                            <textarea class="form-control" type="text" id="project${count}" name="projects[]"></textarea>
+                            <div class="valid-feedback">Looks good!</div>
+                        `;
+                        document.getElementById("projects").appendChild(div);
+                    }
                 </script>
+                <div>
+                    <label class="form-label" for="">Project</label>
+                    <div id="projects">
+                        <div class="mb-3 mt-2">
+                            <!-- <label class="form-label" for="project1">Project 1:</label> -->
+                            <textarea class="form-control" type="text" id="project1" name="projects[]"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" onclick="addProject()" class="btn btn-secondary">+1 Project</button>
+                </div>
 
-                <div class="mb-3 mt-2">
-                    <label class="form-label" for="internship">Internships</label>
-                    <textarea class="form-control" type="text" id="internship" name="internship" required></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
+                <!-- internship -->
+                <script>
+                    var count = 1;
+                    var left = 1; var right = 0;
+                    function addInternship() {
+                        count++;
+                        var div = document.createElement("div");
+                        div.classList.add("mb-3");
+                        div.classList.add("mt-2");
+                        div.innerHTML = `
+                            <div class="mb-3 form-group">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label" for="startdate${count}">Start Date</label>
+                                        <input class="form-control" id="startdate${count}" name="internships[${left}][${right}]" type="text">
+                                        <div class="valid-feedback">Looks good!</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label" for="enddate${count}">End Date</label>
+                                        <input class="form-control" id="enddate${count}" name="internships[${left}][${++right}]" type="text">
+                                        <div class="valid-feedback">Looks good!</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 mt-2">
+                                    <label class="form-label" for="internship${count}">Details</label>
+                                    <textarea class="form-control" type="text" id="internship${count}" name="internships[${left}][${++right}]"></textarea>
+                                    <div class="valid-feedback">Looks good!</div>
+                                </div>
+                            </div>`;
+                        left = left + 1; right = 0;
+                        document.getElementById("internships").appendChild(div);
+                    }
+                </script>
+                <div class="mt-3">
+                    <label class="form-label" for="">Internship</label><br>
+                    <div id="internships">
+                        <div>
+                            <!-- <label class="form-label" for="internship">Internship 1</label> -->
+                            <div class="mb-3 form-group">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label class="form-label" for="startdate1">Start Date</label>
+                                        <input class="form-control" id="startdate1" name="internships[0][0]"
+                                            type="text">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="form-label" for="enddate1">End Date</label>
+                                        <input class="form-control" id="enddate1" name="internships[0][1]" type="text">
+                                        <div class="valid-feedback">
+                                            Looks good!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3 mt-2">
+                                    <label class="form-label" for="internship1">Details</label>
+                                    <textarea class="form-control" type="text" id="internship1"
+                                        name="internships[0][2]"></textarea>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <button type="button" onclick="addInternship()" class="btn btn-secondary">+1 Internship</button>
                 </div>
-                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Internship</button>
-                <div class="mb-3 mt-2">
-                    <label class="form-label" for="certification">Certifications</label>
-                    <textarea class="form-control" type="text" id="certification" name="certification"
-                        required></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
+                <!-- certification -->
+                <script>
+                    var count = 1;
+                    function addCertificate() {
+                        count++;
+                        var div = document.createElement("div");
+                        div.classList.add("mb-3");
+                        div.classList.add("mb-2");
+                        div.innerHTML = ` 
+                        <input class="form-control" type="text" id="certification${count}"
+                                name="certifications[]"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>`;
+                        document.getElementById("certifications").appendChild(div);
+                    }
+                </script>
+                <div class="mt-3">
+                    <label class="form-label" for="">Certification</label>
+                    <div id="certifications">
+                        <div class="mb-3 mt-2">
+                            <!-- <label class="form-label" for="certification1">Certification 1:</label> -->
+                            <input class="form-control" type="text" id="certification1"
+                                name="certifications[]"></textarea>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
                     </div>
+                    <button type="button" onclick="addCertificate()" class="btn btn-secondary">+1 Certificate</button>
                 </div>
-                <button type="button" class="btn btn-primary mt-2" id="add-project-btn">+ Add Certification</button>
-                <!-- <div class="mb-3">
-                    <label class="form-label" for="achievement">Achievements</label>
-                    <textarea class="form-control" type="text" id="achievement" name="achievement" required></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div> -->
+                <!-- submit button -->
                 <div class="mb-3 mt-2">
-                    <button class="btn btn-success">Submit</button>
+                    <button class="btn btn-info">Submit</button>
                 </div>
             </form>
         </div>

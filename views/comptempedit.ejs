@@ -3,7 +3,7 @@
         <h1 class="text-center">Edit Company</h1>
         <div class="col-6 offset-3">
             <form action="/editcomp?_method=PUT" method="POST" novalidate class="validated-form">
-                <div class="mb-3">
+                <div class="mb-3 border border-warning rounded bg-light px-4 py-3">
                     <div class="mb-3">
                         <label class="form-label" for="name">Enter Company Name</label>
                         <input class="form-control" type="text" id="name" name="name" value="<%=company.name%>"

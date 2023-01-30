@@ -14,10 +14,10 @@ const ResumeSchema = new Schema({
     ssc: Number,
     hsc: Number,
     graduation: Number,
-    project: String,
-    internship: String,
+    projects: [String],
+    internships: [[String]],
     skill: String,
-    achievement: String,
+    certifications: [String],
 });
 
 

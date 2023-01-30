@@ -1,34 +1,76 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="text-center">Resumes</h1>
+    <h1 class="text-center">Resume</h1>
     <% if(resumeData) {%>
-        <div class="row">
-            <div class="col-6 offset-3">
-                <div class="card mb-3">
-                    <div class="card-body">
+        <div class="row ">
+            <div class="col-6 offset-3 ">
+                <div class="card mb-3 border border-warning rounded">
+                    <div class="card-body bg-light">
                         <h5 class="card-title">Name -
                             <%= resumeData.name %>
                         </h5>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>Career Objective -</b><br>
+                        <li class="list-group-item">
+                            <b>Career Objective -</b>
                             <%= resumeData.careerObjective %>
                         </li>
-                        <li class="list-group-item"><b>Qualification - </b><br> SSC Percentage -
-                            <%= resumeData.ssc%>% <br> HSC Percentage -
-                                <%= resumeData.hsc%>% <br> Graduation CGPA -
-                                    <%= resumeData.graduation%>/10
+                        <li class="list-group-item bg-light">
+                            <b>Qualification - </b>
+                            <span>SSC - <%= resumeData.ssc%>%,</span>
+                            <span>HSC - <%= resumeData.hsc%>%,</span>
+                            <span>Graduation - <%= resumeData.graduation%>/10</span>
                         </li>
-                        <li class="list-group-item"><b>Skills -</b>
-                            <%= resumeData.skill%>
+                        <li class="list-group-item">
+                            <b>Skills -</b>
+                            <span>
+                                <%= resumeData.skill%>
+                            </span>
                         </li>
-                        <li class="list-group-item"> <b>Projects -</b><br>
-                            <%= resumeData.project%>
+                        <li class="list-group-item bg-light">
+                            <b>Projects </b>
+                            <br>
+                            <ul class="list-unstyled">
+                                <% for(var i=0; i < resumeData.projects.length; i++) { %>
+                                    <hr>
+                                    <li class="bg-light">
+                                        <%= resumeData.projects[i] %>
+                                    </li>
+
+                                    <% } %>
+                            </ul>
                         </li>
-                        <li class="list-group-item"> <b>Internship -</b><br>
-                            <%= resumeData.internship%>
+                        <li class="list-group-item">
+                            <b>Internships </b><br>
+                            <% for(var i=0; i < resumeData.internships.length; i++) { %>
+                                <hr>
+                                <div class="row mb-0">
+                                    <p class="col-4 text-left "><b>Internship No : </b>
+                                        <%= i+1 %>
+                                    </p>
+                                    <p class="col-4 text-left"><b>Start Date : </b>
+                                        <%= resumeData.internships[i][0] %>
+                                    </p>
+                                    <p class="col-4 text-left"><b>End Date:</b>
+                                        <%= resumeData.internships[i][1] %>
+
+                                    </p>
+                                </div>
+                                <p>
+                                    <%= resumeData.internships[i][2] %>
+                                </p>
+
+                                <% } %>
                         </li>
-                        <li class="list-group-item"> <b>Achievements -</b><br>
-                            <%= resumeData.achievement%>
+
+                        <li class="list-group-item bg-light">
+                            <b>Certification</b>
+                            <ul class="list-unstyled">
+                                <% for(var i=0; i < resumeData.certifications.length; i++) { %>
+                                    <li>
+                                        <%= resumeData.certifications[i] %>
+                                    </li>
+                                    <% } %>
+                            </ul>
                         </li>
                         <% if(!currentUser.isAdmin){%>
                             <li class="list-group-item"> <a class="btn btn-primary" href="/edit">Edit Resume</a>

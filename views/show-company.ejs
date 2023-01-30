@@ -3,22 +3,22 @@
     <% if(companyData) {%>
         <div class="row">
             <div class="col-6 offset-3">
-                <div class="card mb-3">
+                <div class="card mb-3 border border-warning rounded">
                     <div class="card-body">
                         <h5 class="card-title">Company Name -
                             <%= companyData.name %>
                         </h5>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><b>About Company -</b><br>
+                        <li class="list-group-item"><b>About Company -</b>
                             <%= companyData.about %>
                         </li>
-                        <li class="list-group-item"> <b>Job Description -</b><br>
+                        <li class="list-group-item"> <b>Job Description -</b>
                             <%= companyData.description%>
                         </li>
-                        <li class="list-group-item"><b>Required Qualification - </b><br> SSC Percentage -
-                            <%= companyData.ssc%>% <br> HSC Percentage -
-                                <%= companyData.hsc%>% <br> Graduation CGPA -
+                        <li class="list-group-item"><b>Required Qualification - </b>SSC -
+                            <%= companyData.ssc%>%, HSC -
+                                <%= companyData.hsc%>%, Graduation -
                                     <%= companyData.graduation%>/10
                         </li>
                         <li class="list-group-item"><b> Requored Skills -</b>
@@ -45,6 +45,11 @@
                         </li> -->
                     </ul>
                 </div>
+                <% if(currentUser.isAdmin){%>
+                    <div class="container my-3 text-black">
+                        <a class=" btn btn-dark" href="/admin/applied-candidate%>">Applied Candidates</a>
+                    </div>
+                    <% } %>
             </div>
         </div>
         <% } else { %>

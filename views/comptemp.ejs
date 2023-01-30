@@ -2,63 +2,66 @@
     <div class="row">
         <h1 class="text-center">Add Company</h1>
         <div class="col-6 offset-3">
-            <form action="/addcomp/" method="POST" novalidate class="validated-form"></form>
-            <div class="mb-3">
-                <label class="form-label" for="name">Enter Company Name</label>
-                <input class="form-control" type="text" id="name" name="name" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="about">About Company</label>
-                <textarea class="form-control" type="text" id="about" name="about" required></textarea>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="description">Job Description</label>
-                <textarea class="form-control" type="text" id="description" name="description" required></textarea>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
-            <div class="mb-3 form-group row">
-                <label class="form-label">Qualification Criteria</label>
-                <div class="col-4">
-                    <label class="form-label" for="ssc">SSC Percentage</label>
-                    <input class="form-control" id="ssc" name="ssc" type="text" required>
-                    <div class="valid-feedback">
-                        Looks good!
+            <form action="/addcomp/" method="POST" novalidate class="validated-form">
+                <div class="border border-warning rounded bg-light px-4 py-3 mb-3">
+                    <div class="mb-3">
+                        <label class="form-label" for="name">Enter Company Name</label>
+                        <input class="form-control" type="text" id="name" name="name" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="hsc">HSC Percentage</label>
-                    <input class="form-control" id="hsc" name="hsc" type="text" required>
-                    <div class="valid-feedback">
-                        Looks good!
+                    <div class="mb-3">
+                        <label class="form-label" for="about">About Company</label>
+                        <textarea class="form-control" type="text" id="about" name="about" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="graduation">Graduation CGPA</label>
-                    <input class="form-control" id="graduation" name="graduation" type="text" required>
-                    <div class="valid-feedback">
-                        Looks good!
+                    <div class="mb-3">
+                        <label class="form-label" for="description">Job Description</label>
+                        <textarea class="form-control" type="text" id="description" name="description"
+                            required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
                     </div>
-                </div>
+                    <div class="mb-3 form-group row">
+                        <label class="form-label">Qualification Criteria</label>
+                        <div class="col-4">
+                            <label class="form-label" for="ssc">SSC Percentage</label>
+                            <input class="form-control" id="ssc" name="ssc" type="text" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" for="hsc">HSC Percentage</label>
+                            <input class="form-control" id="hsc" name="hsc" type="text" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label" for="graduation">Graduation CGPA</label>
+                            <input class="form-control" id="graduation" name="graduation" type="text" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
 
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="skills"> Required Skills</label>
-                <input class="form-control" type="text" id="skills" name="skills" required></textarea>
-                <div class="valid-feedback">
-                    Looks good!
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="skills"> Required Skills</label>
+                        <input class="form-control" type="text" id="skills" name="skills" required></textarea>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-success">Submit</button>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-success">Submit</button>
-            </div>
             </form>
         </div>
     </div>

@@ -4,8 +4,10 @@ body {
         url("https://www.lusha.com/wp-content/uploads/2021/03/HR_management_tools.png");
     background-size: cover;
     background-position: center;
+
     /* text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5); */
+    font-family: "Trirong", serif;
 }
 
 .cover-container {
