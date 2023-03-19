@@ -24,13 +24,32 @@
                         <li class="list-group-item"><b> Requored Skills -</b>
                             <%= companyData.skills%>
                         </li>
-
+                        <li class="list-group-item"><b> Package -</b>
+                            <%= companyData.package%> LPA
+                        </li>
+                        <li class="list-group-item"><b> No of Vacancies -</b>
+                            <%= companyData.vacancies%>
+                        </li>
                         <% if(!currentUser.isAdmin){%>
                             <!-- <li class="list-group-item"> <a class="btn btn-primary" href="/success-message">Apply</a>
                             </li> -->
-                            <form class="p-2" action="/applied-candidates/" method="POST">
-                                <button class="btn btn-primary">Apply</button>
+                            <form class="p-2" id="applyForm" action="/applied-candidates/" method="POST">
+                                <button id="applyBtn" type="submit" class="btn btn-primary">Apply</button>
                             </form>
+
+                            <script>
+                                const applyBtn = document.getElementById('applyBtn');
+                                const applyForm = document.getElementById('applyForm');
+
+                                applyForm.addEventListener('submit', function (event) {
+                                    event.preventDefault();
+                                    applyBtn.innerText = 'Applied';
+                                    applyBtn.classList.remove('btn-primary');
+                                    applyBtn.classList.add('btn-secondary');
+                                    setTimeout(() => applyForm.submit(), 500); // Delay form submission for half a second
+                                });
+                            </script>
+
                             <% } else { %>
                                 <div class="card-body">
                                     <a class="card-link btn btn-info" href="/editcomp">Edit</a>
@@ -49,7 +68,11 @@
                     <div class="container my-3 text-black">
                         <a class=" btn btn-dark" href="/admin/applied-candidate%>">Applied Candidates</a>
                     </div>
-                    <% } %>
+                    <% } else {%>
+                        <div class="container my-3 text-black">
+                            <a class=" btn btn-dark" href="/admin/view-status%>">View Status</a>
+                        </div>
+                        <% } %>
             </div>
         </div>
         <% } else { %>

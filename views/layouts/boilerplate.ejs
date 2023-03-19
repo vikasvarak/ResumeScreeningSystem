@@ -13,10 +13,18 @@
         body {
             font-family: "Trirong", serif;
         }
+
+        .bg-image {
+            background-size: cover;
+            background-position: center;
+            /* background-repeat: no-repeat; */
+        }
     </style>
 </head>
 
-<body class="d-flex flex-column vh-100 bg-info "></body>
+<body class="d-flex flex-column vh-100 bg-image"
+    style="background-image: url('https://wallpaperaccess.com/full/1197702.jpg');">
+</body>
 <%- include('../partials/navbar')%>
     <main class="container mt-5">
         <%- body %>

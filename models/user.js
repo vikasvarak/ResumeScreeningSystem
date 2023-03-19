@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    feedback: String
+    feedback: [String],
+    company_feedback: [String]
 })
 
 userSchema.statics.findAndValidate = async function (username, password) {

@@ -1,15 +1,27 @@
 <% layout('layouts/boilerplate')%>
     <h1 class="text-center">Companies</h1>
-    <% if(companyData) {%>
-        <% for (var company in companyData) { %>
-            <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
-                <h5 class="">Company Name - <%= companyData[company].name %>
-                </h5>
-                <li class="list-group-item">
-                    <a class="btn btn-success" href="/company/<%=companyData[company].companyId%>">View Company</a>
-                </li>
-            </div>
-            <% } %>
-                <% } else { %>
-                    <a href="/fiillresume" class='text-center'>Add Company</a>
-                    <% } %>
+    <% var count=1 %>
+        <% if(companyData) {%>
+            <% for (var company in companyData) { %>
+                <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center">
+                            <p class="rounded-circle border border-secondary text-center p-2 m-0">
+                                <%= count %>
+                            </p>
+                        </div>
+                        <div class="col-11">
+                            <h5 class="">Company Name - <%= companyData[company].name %>
+                            </h5>
+                            <li class="list-group-item">
+                                <a class="btn btn-success" href="/company/<%=companyData[company].companyId%>">View
+                                    Company</a>
+                            </li>
+                        </div>
+                    </div>
+                    <% count=count + 1 %>
+                </div>
+                <% } %>
+                    <% } else { %>
+                        <a href="/fiillresume" class='text-center'>Add Company</a>
+                        <% } %>

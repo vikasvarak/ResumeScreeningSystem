@@ -14,6 +14,8 @@ const CompanySchema = new Schema({
     ssc: Number,
     hsc: Number,
     graduation: Number,
+    package: Number,
+    vacancies: Number,
     skills: String,
     applied_candidate: { type: [{ type: String }] }
 });

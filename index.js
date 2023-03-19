@@ -189,6 +189,14 @@ app.get('/feedback', requireLogin, isUser, async (req, res) => {
     res.render('feedback', { user });
 })
 
+app.get('/admin/view-status', requireLogin, isUser, async (req, res) => {
+    const user = await User.findOne({ 'userId': req.session.user.userId });
+    if (!user) {
+        console.log("some problem is there")
+    }
+    res.render('company-feedback', { user });
+})
+
 // Admin Routes
 app.get('/admin', requireLogin, isAdmin, async (req, res) => {
     res.render('admin')
@@ -292,24 +300,166 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
         // sent back from the Flask server
         .then(async function (parsedBody) {
             var resumes = []
+            var rank = []
+            var score = []
             var i = 0
+            var max_project = 0
+            var min_project = 99
+            var max_internship = 0
+            var min_internship = 99
+            var max_experience = 0
+            var min_experience = 99
+            var max_certification = 0
+            var min_certification = 99
+            var max_skill = 0
+            var min_skill = 99
             for (const item of parsedBody) {
-                console.log(item)
-                const similarity = item.similarity
-                console.log(similarity)
-                const uid = item.userId
-                console.log(uid)
-                // const keys = Object.keys(uid);
-                // console.log(keys)
-                // id = keys[0]
-                // console.log(id)
-                resumes[i] = await Resume.findOne({ 'userId': uid });
-                // const user = await User.findOne({ 'userId': id });
-                // user.feedback = feedback.feedback
-                // user.save();
+                // console.log(item)
+                const field = item[0]
+                var skill_count = item[1]
+                const feedback = item[2]
+                skill_count = Object.values(skill_count);
+                skill_count = skill_count[0]
+                // console.log(skill_count)
+                if (skill_count > max_skill) {
+                    max_skill = skill_count
+                }
+                if (skill_count < min_skill) {
+                    min_skill = skill_count
+                }
+                // item.push({ noOfSkills: skill_count })
+                // console.log(max_skill + " " + min_skill + " " + skill_count)
+                var id = Object.values(field);
+                id = id[0]
+                resumes[i] = await Resume.findOne({ 'userId': id });
+                // console.log(resumes[i])
+                const noOfProjects = resumes[i].projects.length
+                if (noOfProjects > max_project) {
+                    max_project = noOfProjects
+                }
+                if (noOfProjects < min_project) {
+                    min_project = noOfProjects
+                }
+                item.push({ noOfProjects: noOfProjects })
+                var noOfInternships = resumes[i].internships.length
+                if (resumes[i].internships.length === 0 || resumes[i].internships[0][0].length === 0) {
+                    noOfInternships = 0;
+                } else {
+                    noOfInternships = noOfInternships
+                }
+                if (noOfInternships > max_internship) {
+                    max_internship = noOfInternships
+                }
+                if (noOfInternships < min_internship) {
+                    min_internship = noOfInternships
+                }
+                // console.log(noOfInternships)
+                item.push({ noOfInternships: noOfInternships })
+                var total_months;
+                if (noOfInternships > 0) {
+                    total_months = 0;
+                    resumes[i].internships.forEach((internship) => {
+                        const startDate = new Date(internship[0].split("/").reverse().join("-"));
+                        const endDate = new Date(internship[1].split("/").reverse().join("-"));
+                        const diffTime = Math.abs(endDate - startDate);
+                        const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
+                        total_months += diffMonths
+                    });
+                    total_months = total_months - 1;
+                } else {
+                    total_months = 0;
+                }
+                if (total_months > max_experience) {
+                    max_experience = total_months
+                }
+                if (total_months < min_experience) {
+                    min_experience = total_months
+                }
+                // console.log(total_months)
+                item.push({ internshipExperience: total_months })
+                var noOfCertifications = resumes[i].certifications.length
+                if (resumes[i].certifications.length === 0 || resumes[i].certifications[0].length === 0) {
+                    noOfCertifications = 0;
+                } else {
+                    noOfCertifications = noOfCertifications
+                }
+                if (noOfCertifications > max_certification) {
+                    max_certification = noOfCertifications
+                }
+                if (noOfCertifications < min_certification) {
+                    min_certification = noOfCertifications
+                }
+                // console.log(noOfCertifications)
+                item.push({ noOfCertifications: noOfCertifications })
+                score.push(item)
                 i++;
             }
-            res.render('rank', { resumes })
+            for (let i = 0; i < score.length; i++) {
+                let total = 0;
+                let j;
+                feed = []
+                for (j = 0; j < score[i].length; j++) {
+                    if (score[i][j].hasOwnProperty("skill_count")) {
+                        t = ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
+                        total += ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
+                        if (t == 0) {
+                            feed.push("Work on your skills.")
+                        }
+                    }
+                    if (score[i][j].hasOwnProperty("noOfProjects")) {
+                        t = ((score[i][j].noOfProjects - min_project) / (max_project - min_project)) * (0.2 - 0.0)
+                        total += ((score[i][j].noOfProjects - min_project) / (max_project - min_project)) * (0.2 - 0.0)
+                        if (t == 0) {
+                            feed.push("Work on Project.")
+                        }
+                    }
+                    if (score[i][j].hasOwnProperty("noOfInternships")) {
+                        t = ((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0)
+                        total += ((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0)
+                    }
+                    if (score[i][j].hasOwnProperty("internshipExperience")) {
+                        t = ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
+                        total += ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
+                        if (t == 0) {
+                            feed.push("Please Do an Internship")
+                        }
+                    }
+                    if (score[i][j].hasOwnProperty("noOfCertifications")) {
+                        t = ((score[i][j].noOfCertifications - min_certification) / (max_certification - min_certification)) * (0.1 - 0.0)
+                        total += ((score[i][j].noOfCertifications - min_certification) / (max_certification - min_certification)) * (0.1 - 0.0)
+                        if (t == 0) {
+                            feed.push("Do some certifications")
+                        }
+                    }
+                }
+                const user = await User.findOne({ 'userId': score[i][0].id });
+                user.company_feedback = feed
+                user.save();
+                rank.push([{ "userId": score[i][0].id }, { "score": total }])
+                console.log(total)
+            }
+            rank.sort((a, b) => b[1].score - a[1].score);
+            // console.log(rank.length)
+            ranked_resumes = [];
+            const company = await Company.findOne({ 'companyId': req.session.companyId });
+            const vacancies = company.vacancies - 1
+            for (var i = 0; i < rank.length; i++) {
+                // if (i >= rank.length) {
+                //     break;
+                // }
+                const user = await User.findOne({ 'userId': rank[i][0].userId });
+                if (i > vacancies) {
+                    user["company_feedback"].unshift("Sorry, You are not selected. Please work on your resume.")
+                    user.save();
+                    continue;
+                } else {
+                    user.company_feedback = "Congratulations, you are selected."
+                    user.save();
+                }
+                ranked_resumes[i] = await Resume.findOne({ 'userId': rank[i][0].userId });
+            }
+            // console.log(ranked_resumes)
+            res.render('rank', { ranked_resumes })
         })
         .catch(function (err) {
             console.log(err);
@@ -430,9 +580,6 @@ app.get('/admin/generate-static-rank', requireLogin, isAdmin, async function (re
                 // console.log(noOfCertifications)
                 item.push({ noOfCertifications: noOfCertifications })
                 score.push(item)
-                const user = await User.findOne({ 'userId': id });
-                user.feedback = feedback.feedback
-                user.save();
                 i++;
             }
             // console.log(max_skill + " " + min_skill)
@@ -442,38 +589,59 @@ app.get('/admin/generate-static-rank', requireLogin, isAdmin, async function (re
             // console.log(max_certification + " " + min_certification)
             // console.log(score)
             for (let i = 0; i < score.length; i++) {
+                feed = []
                 let total = 0;
                 let j;
                 for (j = 0; j < score[i].length; j++) {
                     if (score[i][j].hasOwnProperty("skill_count")) {
-                        // console.log(((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0))
+                        t = ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
                         total += ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
+                        if (t == 0) {
+                            feed.push("Work on your skills.")
+                        }
                     }
                     if (score[i][j].hasOwnProperty("noOfProjects")) {
-                        // console.log(((score[i][j].noOfProjects - min_project) / (max_project - min_project)) * (0.2 - 0.0))
+                        t = ((score[i][j].noOfProjects - min_project) / (max_project - min_project)) * (0.2 - 0.0)
                         total += ((score[i][j].noOfProjects - min_project) / (max_project - min_project)) * (0.2 - 0.0)
+                        if (t == 0) {
+                            feed.push("Work on projects.")
+                        }
                     }
                     if (score[i][j].hasOwnProperty("noOfInternships")) {
-                        // console.log(((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0))
+                        t = ((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0)
                         total += ((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0)
+                        // if(t == 0){
+                        //     feed.append("Please Do an Internship.")
+                        // }
                     }
                     if (score[i][j].hasOwnProperty("internshipExperience")) {
-                        // console.log(((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0))
+                        t = ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
                         total += ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
+                        if (t == 0) {
+                            feed.push("Please Do an Internship.")
+                        }
                     }
                     if (score[i][j].hasOwnProperty("noOfCertifications")) {
-                        // console.log(((score[i][j].noOfCertifications - min_certification) / (max_certification - min_certification)) * (0.1 - 0.0))
+                        t = ((score[i][j].noOfCertifications - min_certification) / (max_certification - min_certification)) * (0.1 - 0.0)
                         total += ((score[i][j].noOfCertifications - min_certification) / (max_certification - min_certification)) * (0.1 - 0.0)
+                        if (t == 0) {
+                            feed.push("Please Do some certifications.")
+                        }
                     }
                 }
+                // console.log(feed)
+                const user = await User.findOne({ 'userId': score[i][0].id });
+                user.feedback = feed
+                user.save();
                 rank.push([{ "userId": score[i][0].id }, { "score": total }])
-                console.log(total)
+                // console.log(total)
             }
             rank.sort((a, b) => b[1].score - a[1].score);
             ranked_resumes = [];
             for (var i = 0; i < rank.length; i++) {
                 ranked_resumes[i] = await Resume.findOne({ 'userId': rank[i][0].userId });
             }
+            // console.log(ranked_resumes)
             // console.log(rank)
             res.render('rank', { ranked_resumes })
         })

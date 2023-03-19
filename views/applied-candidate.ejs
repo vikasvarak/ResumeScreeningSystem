@@ -1,20 +1,31 @@
 <% layout('layouts/boilerplate')%>
     <h1 class="text-center">Resumes</h1>
-    <% if(resumeData) {%>
-        <% for (var resume in resumeData) { %>
-            <div class="container p-2 my-5 bg-white text-black border border-warning rounded" style="width: 50%;">
-                <h5 class="">Candidate Name -
-                    <%= resumeData[resume].name %>
-                </h5>
-                <li class="list-group-item"> <a class="btn btn-success"
-                        href="/resume/<%=resumeData[resume].resumeId%>">View Resume</a>
-                </li>
-            </div>
-            <% } %>
-                <div class="container my-5 text-black" style="width: 50%;">
-                    <a class="btn btn-dark" href="/admin/generate-dynamic-rank%>">Generate Rank</a>
+    <% var count=1 %>
+        <% if(resumeData) {%>
+            <% for (var resume in resumeData) { %>
+                <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center">
+                            <p class="rounded-circle border border-secondary text-center p-2 m-0">
+                                <%= count %>
+                            </p>
+                        </div>
+                        <div class="col-11">
+                            <h5 class="">Candidate Name -
+                                <%= resumeData[resume].name %>
+                            </h5>
+                            <li class="list-group-item"> <a class="btn btn-success"
+                                    href="/resume/<%=resumeData[resume].resumeId%>">View Resume</a>
+                            </li>
+                        </div>
+                    </div>
+                    <% count=count + 1 %>
                 </div>
+                <% } %>
+                    <div class="container my-5 text-black" style="width: 50%;">
+                        <a class="btn btn-dark" href="/admin/generate-dynamic-rank%>">Generate Rank</a>
+                    </div>
 
-                <% } else { %>
-                    <a href="/fiillresume" class='text-center'>Add Company</a>
-                    <% } %>
+                    <% } else { %>
+                        <a href="/fiillresume" class='text-center'>Add Company</a>
+                        <% } %>

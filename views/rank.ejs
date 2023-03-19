@@ -1,14 +1,23 @@
 <% layout('layouts/boilerplate')%>
     <h1 class="text-center">Ranked Candidates</h1>
-    <% for (var resume in ranked_resumes) { %>
-        <div class="container p-2 my-5 bg-white text-black border border-warning rounded text-black"
-            style="width: 50%;">
-            <h5 class="">Candidate Name -
-                <%= ranked_resumes[resume].name %>
-            </h5>
-            <li class="list-group-item"> <a class="btn btn-success"
-                    href="/resume/<%=ranked_resumes[resume].resumeId%>">View
-                    Resume</a>
-            </li>
-        </div>
-        <% } %>
+    <% var count=1 %>
+        <% for (var resume in ranked_resumes) { %>
+            <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
+                <div class="row">
+                    <div class="col-1 d-flex align-items-center">
+                        <p class="rounded-circle border border-secondary text-center p-2 m-0">
+                            <%= count %>
+                        </p>
+                    </div>
+                    <div class="col-11">
+                        <h5 class="">Candidate Name - <%= ranked_resumes[resume].name %>
+                        </h5>
+                        <li class="list-group-item"> <a class="btn btn-success"
+                                href="/resume/<%=ranked_resumes[resume].resumeId%>">View
+                                Resume</a>
+                        </li>
+                    </div>
+                </div>
+                <% count=count + 1 %>
+            </div>
+            <% } %>

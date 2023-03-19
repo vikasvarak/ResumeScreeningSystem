@@ -2,9 +2,9 @@
     <div class="card bg-white border border-warning text-center text-dark mx-auto mt-5" style="max-width: 40rem;">
         <div class="card-body">
             <h4 class="card-title">Your Feedback</h4>
-            <% for (let i=0; i < user.feedback.length; i++) { %>
+            <% for (let i=0; i < user.company_feedback.length; i++) { %>
                 <li class="text-left">
-                    <%= user.feedback[i] %>
+                    <%= user.company_feedback[i] %>
                 </li>
                 <% } %>
         </div>
