@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="text-center">Companies</h1>
+    <h1 class="text-center text-white">Companies</h1>
     <% var count=1 %>
         <% if(companyData) {%>
             <% for (var company in companyData) { %>
@@ -14,7 +14,7 @@
                             <h5 class="">Company Name - <%= companyData[company].name %>
                             </h5>
                             <li class="list-group-item">
-                                <a class="btn btn-success" href="/company/<%=companyData[company].companyId%>">View
+                                <a class="btn btn-secondary" href="/company/<%=companyData[company].companyId%>">View
                                     Company</a>
                             </li>
                         </div>

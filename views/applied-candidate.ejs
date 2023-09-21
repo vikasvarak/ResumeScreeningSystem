@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="text-center">Resumes</h1>
+    <h1 class="text-center text-white">Resumes</h1>
     <% var count=1 %>
         <% if(resumeData) {%>
             <% for (var resume in resumeData) { %>
@@ -14,7 +14,7 @@
                             <h5 class="">Candidate Name -
                                 <%= resumeData[resume].name %>
                             </h5>
-                            <li class="list-group-item"> <a class="btn btn-success"
+                            <li class="list-group-item"> <a class="btn btn-secondary"
                                     href="/resume/<%=resumeData[resume].resumeId%>">View Resume</a>
                             </li>
                         </div>

@@ -1,0 +1,52 @@
+<% layout('layouts/boilerplate')%>
+    <h1 class="text-center text-white">Ranked Candidates</h1>
+    <% var count=1 %>
+        <div class="container p-1 my-5 text-white border border-warning rounded" style="width: 50%;">
+            <h5 class="text-center">Selected Candidates</h5>
+        </div>
+        <% for (var i=0; i < ranked_resumes.length; i++) { %>
+            <% if(i<=vacancy) { %>
+                <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
+                    <div class="row">
+                        <div class="col-1 d-flex align-items-center">
+                            <p class="rounded-circle border border-secondary text-center p-2 m-0">
+                                <%= count %>
+                            </p>
+                        </div>
+                        <div class="col-11">
+                            <h5 class="">Candidate Name - <%= ranked_resumes[i].name %>
+                            </h5>
+                            <li class="list-group-item"> <a class="btn btn-secondary"
+                                    href="/resume/<%=ranked_resumes[i].resumeId%>">View
+                                    Resume</a>
+                            </li>
+                        </div>
+                    </div>
+                    <% count=count + 1 %>
+                </div>
+                <% } %>
+                    <% } %>
+                        <div class="container p-1 my-5 text-white border border-warning rounded" style="width: 50%;">
+                            <h5 class="text-center">Rejected Candidates</h5>
+                        </div>
+                        <% for (var i=vacancy + 1; i < ranked_resumes.length; i++) { %>
+                            <div class="container p-2 my-5 bg-light text-black border border-warning rounded"
+                                style="width: 50%;">
+                                <div class="row">
+                                    <div class="col-1 d-flex align-items-center">
+                                        <p class="rounded-circle border border-secondary text-center p-2 m-0">
+                                            <%= count %>
+                                        </p>
+                                    </div>
+                                    <div class="col-11">
+                                        <h5 class="">Candidate Name - <%= ranked_resumes[i].name %>
+                                        </h5>
+                                        <li class="list-group-item"> <a class="btn btn-secondary"
+                                                href="/resume/<%=ranked_resumes[i].resumeId%>">View
+                                                Resume</a>
+                                        </li>
+                                    </div>
+                                </div>
+                                <% count=count + 1 %>
+                            </div>
+                            <% } %>

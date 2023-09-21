@@ -1,4 +1,4 @@
-<% layout('layouts/boilerplate')%>
+<% layout('layouts/boilerplate') %>
     <div class="row">
         <h1 class="text-center">Edit Company</h1>
         <div class="col-6 offset-3">
@@ -6,7 +6,7 @@
                 <div class="mb-3 border border-warning rounded bg-light px-4 py-3">
                     <div class="mb-3">
                         <label class="form-label" for="name">Enter Company Name</label>
-                        <input class="form-control" type="text" id="name" name="name" value="<%=company.name%>"
+                        <input class="form-control" type="text" id="name" name="name" value="<%= company.name %>"
                             required>
                         <div class="valid-feedback">
                             Looks good!
@@ -14,8 +14,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="about">About Company</label>
-                        <textarea class="form-control" type="text" id="about" name="about" value="<%=company.about%>"
-                            required></textarea>
+                        <textarea class="form-control" type="text" id="about" name="about"
+                            required><%= company.about %></textarea>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -23,7 +23,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="description">Job Description</label>
                         <textarea class="form-control" type="text" id="description" name="description"
-                            value="<%=company.description%>" required></textarea>
+                            required><%= company.description %></textarea>
                         <div class="valid-feedback">
                             Looks good!
                         </div>
@@ -32,7 +32,7 @@
                         <label class="form-label">Qualification Criteria</label>
                         <div class="col-4">
                             <label class="form-label" for="ssc">SSC Percentage</label>
-                            <input class="form-control" id="ssc" name="ssc" type="text" value="<%=company.ssc%>"
+                            <input class="form-control" id="ssc" name="ssc" type="text" value="<%= company.ssc %>"
                                 required>
                             <div class="valid-feedback">
                                 Looks good!
@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-4">
                             <label class="form-label" for="hsc">HSC Percentage</label>
-                            <input class="form-control" id="hsc" name="hsc" type="text" value="<%=company.hsc%>"
+                            <input class="form-control" id="hsc" name="hsc" type="text" value="<%= company.hsc %>"
                                 required>
                             <div class="valid-feedback">
                                 Looks good!
@@ -49,7 +49,7 @@
                         <div class="col-4">
                             <label class="form-label" for="graduation">Graduation CGPA</label>
                             <input class="form-control" id="graduation" name="graduation" type="text"
-                                value="<%=company.graduation%>" required>
+                                value="<%= company.graduation %>" required>
                             <div class="valid-feedback">
                                 Looks good!
                             </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="skills">Skills</label>
-                        <input class="form-control" type="text" id="skills" name="skills" value="<%=company.skills%>"
+                        <input class="form-control" type="text" id="skills" name="skills" value="<%= company.skills %>"
                             required></input>
                         <div class="valid-feedback">
                             Looks good!
@@ -66,9 +66,7 @@
                     <div class="mb-3">
                         <button class="btn btn-info">Update Company</button>
                     </div>
+                </div>
             </form>
-            </form>
-            <a href="/admin">Back</a>
-
         </div>
     </div>

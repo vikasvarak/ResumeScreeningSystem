@@ -88,8 +88,8 @@ def rank_generator():
             list.append({'feedback': 'profile looks good'})
         score.append(list)
     # print(score)
-    # Define a function to split the Skills column into a list of skills
 
+    # Define a function to split the Skills column into a list of skills
     def split_skills(row):
         return row.split(',')
 
@@ -187,13 +187,20 @@ def rank_generator():
             if ip.lower() in lemmatized_interns:
                 count = count+1
         list.append({'id': resume['userId']})
-        list.append({'skill_count': count})
-        if (count < 5):
-            list.append({'feedback': 'need to work on skills'})
-        else:
-            list.append({'feedback': 'profile looks good'})
+        list.append({'resume_skill': count})
         score_resume.append(list)
-    print(score_resume)
+
+    # Create a dictionary from list2 with 'id' as key
+    list2_dict = {d[0]['id']: d[1] for d in score_resume}
+
+    # Loop through list1 and update matching dictionaries with 'resume_skill'
+    for l in score:
+        id_value = l[0]['id']
+        if id_value in list2_dict:
+            l.append(list2_dict[id_value])
+
+    # Output updated list1
+    # print(score)
     return score
     # vec1 = [1 if token in resume_vector else 0 for token in unique_tokens]
     # vec2 = [1 if token in jobd_vector else 0 for token in unique_tokens]
@@ -291,7 +298,7 @@ def static_rank_generator():
         result = {'userId': resume['userId'],
                   'skill': lemmatized_skills, 'project': lemmatized_projects, 'certification': lemmatized_certifications, 'internship': lemmatized_internships}
         tokenized_resume.append(result)
-
+    # print(result)
     score = []
     for resume in tokenized_resume:
         list = []
@@ -308,6 +315,7 @@ def static_rank_generator():
         for ip in resume['internship']:
             if ip.lower() in lemmatized_interns:
                 count = count+1
+        # print(count)
         list.append({'id': resume['userId']})
         list.append({'skill_count': count})
         if (count < 5):

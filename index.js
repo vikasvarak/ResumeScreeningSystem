@@ -165,8 +165,8 @@ app.get('/edit', requireLogin, isUser, async (req, res) => {
 })
 
 app.post('/edit', requireLogin, isUser, async (req, res) => {
-    const resume = await Resume.findOneAndUpdate({ 'userId': req.session.user.userId }, { ...req.body });
-    res.redirect('/user')
+    await Resume.findOneAndUpdate({ 'userId': req.session.user.userId }, { ...req.body });
+    res.redirect(`/resume/view-resume`)
 })
 
 const url = require('url');
@@ -221,7 +221,9 @@ app.post('/addcomp', requireLogin, isAdmin, async (req, res) => {
 })
 
 app.get('/editcomp', requireLogin, isAdmin, async (req, res) => {
-    const company = await Company.findOne({ 'userId': req.session.user.userId })
+    const company = await Company.findOne({ 'companyId': req.session.companyId })
+    // console.log(company)
+    // console.log(req.session.companyId);
     if (!company) {
         // req.flash('error', 'Cannot find that Resume!');
         return res.redirect('/admin');
@@ -232,9 +234,10 @@ app.get('/editcomp', requireLogin, isAdmin, async (req, res) => {
 
 
 app.post('/editcomp', requireLogin, isAdmin, async (req, res) => {
-    const company = await Company.findOneAndUpdate({ 'userId': req.session.user.userId }, { ...req.body });
-    res.redirect('/admin')
+    await Company.findOneAndUpdate({ 'companyId': req.session.companyId }, { ...req.body });
+    res.redirect(`/company/${req.session.companyId}`);
 })
+
 
 app.get('/admin/view-resumes', requireLogin, isAdmin, async (req, res) => {
     const resumeData = await Resume.find();
@@ -313,10 +316,14 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
             var min_certification = 99
             var max_skill = 0
             var min_skill = 99
+            var max_resume_skill = 0
+            var min_resume_skill = 99
             for (const item of parsedBody) {
                 // console.log(item)
                 const field = item[0]
                 var skill_count = item[1]
+                var resume_skill = item[3]
+                // console.log(resume_skill)
                 const feedback = item[2]
                 skill_count = Object.values(skill_count);
                 skill_count = skill_count[0]
@@ -327,8 +334,17 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
                 if (skill_count < min_skill) {
                     min_skill = skill_count
                 }
+                resume_skill = Object.values(resume_skill);
+                resume_skill = resume_skill[0]
+                if (resume_skill > max_resume_skill) {
+                    max_resume_skill = resume_skill
+                }
+                if (resume_skill < min_resume_skill) {
+                    min_resume_skill = resume_skill
+                }
+                // console.log(resume_skill)
                 // item.push({ noOfSkills: skill_count })
-                // console.log(max_skill + " " + min_skill + " " + skill_count)
+                // console.log(max_resume_skill + " " + min_resume_skill)
                 var id = Object.values(field);
                 id = id[0]
                 resumes[i] = await Resume.findOne({ 'userId': id });
@@ -400,8 +416,15 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
                 feed = []
                 for (j = 0; j < score[i].length; j++) {
                     if (score[i][j].hasOwnProperty("skill_count")) {
-                        t = ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
-                        total += ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.3 - 0.0)
+                        t = ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.2 - 0.0)
+                        total += ((score[i][j].skill_count - min_skill) / (max_skill - min_skill)) * (0.2 - 0.0)
+                        if (t == 0) {
+                            feed.push("Work on your skills.")
+                        }
+                    }
+                    if (score[i][j].hasOwnProperty("resume_skill")) {
+                        t = ((score[i][j].resume_skill - min_resume_skill) / (max_resume_skill - min_resume_skill)) * (0.2 - 0.0)
+                        total += ((score[i][j].resume_skill - min_resume_skill) / (max_resume_skill - min_resume_skill)) * (0.2 - 0.0)
                         if (t == 0) {
                             feed.push("Work on your skills.")
                         }
@@ -418,8 +441,8 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
                         total += ((score[i][j].noOfInternships - min_internship) / (max_internship - min_internship)) * (0.1 - 0.0)
                     }
                     if (score[i][j].hasOwnProperty("internshipExperience")) {
-                        t = ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
-                        total += ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.3 - 0.0)
+                        t = ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.2 - 0.0)
+                        total += ((score[i][j].internshipExperience - min_experience) / (max_experience - min_experience)) * (0.2 - 0.0)
                         if (t == 0) {
                             feed.push("Please Do an Internship")
                         }
@@ -451,15 +474,17 @@ app.get('/admin/generate-dynamic-rank', requireLogin, isAdmin, async function (r
                 if (i > vacancies) {
                     user["company_feedback"].unshift("Sorry, You are not selected. Please work on your resume.")
                     user.save();
-                    continue;
                 } else {
                     user.company_feedback = "Congratulations, you are selected."
                     user.save();
                 }
                 ranked_resumes[i] = await Resume.findOne({ 'userId': rank[i][0].userId });
             }
-            // console.log(ranked_resumes)
-            res.render('rank', { ranked_resumes })
+            // console.log(ranked_resumes.length)
+            res.render('company_rank.ejs', {
+                ranked_resumes: ranked_resumes,
+                vacancy: vacancies
+            })
         })
         .catch(function (err) {
             console.log(err);
@@ -516,6 +541,7 @@ app.get('/admin/generate-static-rank', requireLogin, isAdmin, async function (re
                 if (skill_count < min_skill) {
                     min_skill = skill_count
                 }
+                // console.log(max_skill + " " + min_skill)
                 // item.push({ noOfSkills: skill_count })
                 var id = Object.values(field);
                 id = id[0]
@@ -629,12 +655,15 @@ app.get('/admin/generate-static-rank', requireLogin, isAdmin, async function (re
                         }
                     }
                 }
+                console.log(total)
+                if (feed.length == 0) {
+                    feed.push("Your Resume Looks Good.")
+                }
                 // console.log(feed)
                 const user = await User.findOne({ 'userId': score[i][0].id });
                 user.feedback = feed
                 user.save();
                 rank.push([{ "userId": score[i][0].id }, { "score": total }])
-                // console.log(total)
             }
             rank.sort((a, b) => b[1].score - a[1].score);
             ranked_resumes = [];

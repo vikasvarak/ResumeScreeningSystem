@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="text-center">Companies</h1>
+    <h1 class="text-center">Company</h1>
     <% if(companyData) {%>
         <div class="row">
             <div class="col-6 offset-3">
@@ -21,7 +21,7 @@
                                 <%= companyData.hsc%>%, Graduation -
                                     <%= companyData.graduation%>/10
                         </li>
-                        <li class="list-group-item"><b> Requored Skills -</b>
+                        <li class="list-group-item"><b> Required Skills -</b>
                             <%= companyData.skills%>
                         </li>
                         <li class="list-group-item"><b> Package -</b>
@@ -53,7 +53,7 @@
                             <% } else { %>
                                 <div class="card-body">
                                     <a class="card-link btn btn-info" href="/editcomp">Edit</a>
-                                    <form class="d-inline" action="" method="POST">
+                                    <form class="d-inline" action="/delete-comp" method="POST">
                                         <button class="btn btn-danger">Delete</button>
                                     </form>
                                 </div>

@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-    <h1 class="text-center">Ranked Candidates</h1>
+    <h1 class="text-center text-white">Ranked Candidates</h1>
     <% var count=1 %>
         <% for (var resume in ranked_resumes) { %>
             <div class="container p-2 my-5 bg-light text-black border border-warning rounded" style="width: 50%;">
@@ -12,7 +12,7 @@
                     <div class="col-11">
                         <h5 class="">Candidate Name - <%= ranked_resumes[resume].name %>
                         </h5>
-                        <li class="list-group-item"> <a class="btn btn-success"
+                        <li class="list-group-item"> <a class="btn btn-secondary"
                                 href="/resume/<%=ranked_resumes[resume].resumeId%>">View
                                 Resume</a>
                         </li>
